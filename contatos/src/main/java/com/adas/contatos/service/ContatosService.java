@@ -12,17 +12,40 @@ public class ContatosService {
     // Declarando uma lista de contatos para simular um banco de dados
     List<Contato> listaContatos = new ArrayList<>();
 
+    Integer proximoCodigo = 1;
+
     // Função responável por retornar a lista atualizada de contatos
-    public List<Contato> findAll() {
+    public List<Contato> buscarTodos() {
         return this.listaContatos;
     }
 
-    // Função responsável por receber um 'novo contato' e salvar dentro da lista
-    public String insert(String nome) {
+    // Função responsável por encontrar um contato com o código igual ao enviado por parametro
+    public Contato buscarPorCodigo(int codigo) {
+        Contato contatoEncontrado = null;
+
+        // Percorrer a lista para verificar se algum contato tem o código buscado
+        for (Contato contatoAtual : this.listaContatos) {
+            if (contatoAtual.getCodigo() == codigo) {
+                contatoEncontrado = contatoAtual;
+            }
+        }
+
+        return contatoEncontrado;
+    }
+
+    // Função responsável por receber um os dados do novo contato e salvar dentro da lista
+    public Contato inserir(String nome, String telefone) {
         Contato novoContato = new Contato();
+
+        novoContato.setCodigo(this.proximoCodigo);
         novoContato.setNome(nome);
+        novoContato.setTelefone(telefone);
+
         this.listaContatos.add(novoContato);
-        return novoContato.getNome();
+
+        this.proximoCodigo++;
+
+        return novoContato;
     }
 
 }

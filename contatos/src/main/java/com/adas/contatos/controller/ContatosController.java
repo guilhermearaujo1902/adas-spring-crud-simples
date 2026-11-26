@@ -1,10 +1,8 @@
 package com.adas.contatos.controller;
 
+import com.adas.contatos.model.Contato;
 import com.adas.contatos.service.ContatosService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,16 +27,37 @@ public class ContatosController {
         this.contatosService = contatosService;
     }
 
+    /*
+    *  TIPOS DE ENDPOINT
+    *
+    *  GET - Obter informação, exemplo: Buscar a lista de todos os contatos
+    *  POST - Gerar dado novo no banco, exemplo: Cadastrar um novo usuário
+    *  PUT - Atualizar dados no banco, exemplo: Alterar dados de um produto
+    *  DELETE - Excluir dados, exemplo: Remover um registro do banco
+    *
+    * */
+
     @GetMapping
-    public List<String> findAll() {
-        List<String> listaContatos = this.contatosService.findAll();
+    public List<Contato> buscarTodos() {
+        List<Contato> listaContatos = this.contatosService.buscarTodos();
         return listaContatos;
     }
 
-    @GetMapping("/novo")
-    public String insert(@RequestParam String novoContato) {
-        String contatoSalvo = this.contatosService.insert(novoContato);
-        return "Novo contato salvo na lista: " + contatoSalvo;
+    @GetMapping("/{codigo}")
+    public Contato buscarPorCodigo(@PathVariable int codigo) {
+        return this.contatosService.buscarPorCodigo(codigo);
     }
+
+    @PostMapping("/novo")
+    public Contato inserir(@RequestParam String nome, @RequestParam String telefone) {
+        return this.contatosService.inserir(nome, telefone);
+    }
+
+    // Criar um endpoint para EXCLUIR um contato pelo código
+    // Exemplo na Service: lista.remove(objetoParaExcluir)
+
+
+    // Criar um endpoint para Habilitar ou desabilitar um contato da lista
+    // Ajuste no objeto 'Contato' para adicionar a propriedade 'status'
 
 }
