@@ -28,14 +28,14 @@ public class ContatosController {
     }
 
     /*
-    *  TIPOS DE ENDPOINT
-    *
-    *  GET - Obter informação, exemplo: Buscar a lista de todos os contatos
-    *  POST - Gerar dado novo no banco, exemplo: Cadastrar um novo usuário
-    *  PUT - Atualizar dados no banco, exemplo: Alterar dados de um produto
-    *  DELETE - Excluir dados, exemplo: Remover um registro do banco
-    *
-    * */
+     *  TIPOS DE ENDPOINT
+     *
+     *  GET - Obter informação, exemplo: Buscar a lista de todos os contatos
+     *  POST - Gerar dado novo no banco, exemplo: Cadastrar um novo usuário
+     *  PUT - Atualizar dados no banco, exemplo: Alterar dados de um produto
+     *  DELETE - Excluir dados, exemplo: Remover um registro do banco
+     *
+     * */
 
     @GetMapping
     public List<Contato> buscarTodos() {
@@ -53,8 +53,19 @@ public class ContatosController {
         return this.contatosService.inserir(nome, telefone);
     }
 
-    // Criar um endpoint para EXCLUIR um contato pelo código
-    // Exemplo na Service: lista.remove(objetoParaExcluir)
+    @DeleteMapping("/{codigo}")
+    public Contato excluir(@PathVariable int codigo) {
+        return this.contatosService.excluir(codigo);
+    }
+
+    @PutMapping("/{codigo}")
+    public Contato editar(
+            @PathVariable int codigo,
+            @RequestParam String novoNome,
+            @RequestParam String novoTelefone) {
+        return this.contatosService.editar(codigo, novoNome, novoTelefone);
+    }
+
 
 
     // Criar um endpoint para Habilitar ou desabilitar um contato da lista

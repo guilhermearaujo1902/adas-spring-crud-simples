@@ -48,4 +48,25 @@ public class ContatosService {
         return novoContato;
     }
 
+    public Contato excluir(int codigo) {
+        Contato contatoParaExcluir = this.buscarPorCodigo(codigo);
+
+        if (contatoParaExcluir != null) {
+            this.listaContatos.remove(contatoParaExcluir);
+        }
+
+        return contatoParaExcluir;
+    }
+
+    public Contato editar(int codigo, String novoNome, String novoTelefone) {
+        Contato contatoParaEditar = this.buscarPorCodigo(codigo);
+
+        if (contatoParaEditar != null) {
+            contatoParaEditar.setNome(novoNome);
+            contatoParaEditar.setTelefone(novoTelefone);
+        }
+
+        return contatoParaEditar;
+    }
+
 }
